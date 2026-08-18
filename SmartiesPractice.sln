@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03A3EBA8-A2D6-4A68-82E4-6AEF9349853E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartiesPractice.Api", "src\SmartiesPractice.Api\SmartiesPractice.Api.csproj", "{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartiesPractice.Core", "src\SmartiesPractice.Core\SmartiesPractice.Core.csproj", "{DC81BE07-0437-47F8-B64A-03415B859AD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartiesPractice.Messages", "src\SmartiesPractice.Messages\SmartiesPractice.Messages.csproj", "{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31E867E1-BA17-4739-9C0B-B4B1ACD418C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartiesPractice.UnitTests", "tests\SmartiesPractice.UnitTests\SmartiesPractice.UnitTests.csproj", "{1A4955DE-625D-40AA-A5A0-F6BFC9B21828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartiesPractice.IntegrationTests", "tests\SmartiesPractice.IntegrationTests\SmartiesPractice.IntegrationTests.csproj", "{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC81BE07-0437-47F8-B64A-03415B859AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC81BE07-0437-47F8-B64A-03415B859AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC81BE07-0437-47F8-B64A-03415B859AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC81BE07-0437-47F8-B64A-03415B859AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4955DE-625D-40AA-A5A0-F6BFC9B21828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4955DE-625D-40AA-A5A0-F6BFC9B21828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4955DE-625D-40AA-A5A0-F6BFC9B21828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4955DE-625D-40AA-A5A0-F6BFC9B21828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F58ECCE-1C5E-40A6-A2A4-494CD7EA38E4} = {03A3EBA8-A2D6-4A68-82E4-6AEF9349853E}
+		{DC81BE07-0437-47F8-B64A-03415B859AD5} = {03A3EBA8-A2D6-4A68-82E4-6AEF9349853E}
+		{DB80AE79-AB67-46FF-A7B3-EB8A0EE958D6} = {03A3EBA8-A2D6-4A68-82E4-6AEF9349853E}
+		{1A4955DE-625D-40AA-A5A0-F6BFC9B21828} = {31E867E1-BA17-4739-9C0B-B4B1ACD418C6}
+		{F95E1EBB-CC76-47C9-B1C8-66ED086CCAF9} = {31E867E1-BA17-4739-9C0B-B4B1ACD418C6}
+	EndGlobalSection
+EndGlobal
