@@ -1,6 +1,20 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Mediator.Net;
+using Mediator.Net.Autofac;
+using SmartiesPractice.Core.Handlers.RequestHandlers.Users;
 using SmartiesPractice.Core.Users;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(container =>
+{
+    var mediatorBuilder = new MediatorBuilder();
+    mediatorBuilder.RegisterHandlers(typeof(CreateUserRequestHandler).Assembly);
+
+    container.RegisterMediator(mediatorBuilder);
+});
 
 // Add services to the container.
 

@@ -1,5 +1,5 @@
+using Mediator.Net;
 using Microsoft.AspNetCore.Mvc;
-using SmartiesPractice.Core.Users;
 using SmartiesPractice.Messages.Users;
 
 namespace SmartiesPractice.Api.Controllers;
@@ -8,61 +8,72 @@ namespace SmartiesPractice.Api.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IMediator _mediator;
 
-    public UserController(UserService userService)
+    public UserController(IMediator mediator)
     {
-        _userService = userService;
+        _mediator = mediator;
     }
 
     [HttpPost]
-    public ActionResult<User> Create([FromBody] CreateUserRequest request)
+    public async Task<ActionResult<User>> Create(
+        [FromBody] CreateUserRequest request,
+        CancellationToken cancellationToken)
     {
-        var user = _userService.Create(request);
+        var response = await _mediator.RequestAsync<CreateUserRequest, CreateUserResponse>(
+            request, cancellationToken);
 
+        var user = response.User;
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
     }
 
     [HttpGet]
-    public ActionResult<List<User>> GetAll()
+    public async Task<ActionResult<List<User>>> GetAll(CancellationToken cancellationToken)
     {
-        return Ok(_userService.GetAll());
+        var response = await _mediator.RequestAsync<GetUsersRequest, GetUsersResponse>(
+            new GetUsersRequest(), cancellationToken);
+
+        return Ok(response.Users);
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<User> GetById(int id)
+    public async Task<ActionResult<User>> GetById(int id, CancellationToken cancellationToken)
     {
-        var user = _userService.GetById(id);
+        var response = await _mediator.RequestAsync<GetUserByIdRequest, GetUserByIdResponse>(
+            new GetUserByIdRequest(id), cancellationToken);
 
-        if (user is null)
+        if (response.User is null)
         {
             return NotFound();
         }
 
-        return Ok(user);
+        return Ok(response.User);
     }
 
     [HttpPost("{id:int}")]
-    public ActionResult<User> Update(
+    public async Task<ActionResult<User>> Update(
         int id,
-        [FromBody] UpdateUserRequest request)
+        [FromBody] UpdateUserRequest request,
+        CancellationToken cancellationToken)
     {
-        var user = _userService.Update(id, request);
+        var response = await _mediator.RequestAsync<UpdateUserMessage, UpdateUserResponse>(
+            new UpdateUserMessage(id, request), cancellationToken);
 
-        if (user is null)
+        if (response.User is null)
         {
             return NotFound();
         }
 
-        return Ok(user);
+        return Ok(response.User);
     }
 
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var deleted = _userService.Delete(id);
+        var response = await _mediator.RequestAsync<DeleteUserRequest, DeleteUserResponse>(
+            new DeleteUserRequest(id), cancellationToken);
 
-        if (!deleted)
+        if (!response.Deleted)
         {
             return NotFound();
         }
