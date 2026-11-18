@@ -1,3 +1,4 @@
+using Mediator.Net;
 using Microsoft.AspNetCore.Mvc;
 using SmartiesPractice.Messages.Users;
 
@@ -7,80 +8,76 @@ namespace SmartiesPractice.Api.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private static readonly List<User> Users = new();
+    private readonly IMediator _mediator;
 
-    private static int _nextId = 1;
-    
-    [HttpPost]
-    public ActionResult<User> Create([FromBody] CreateUserRequest request)
+    public UserController(IMediator mediator)
     {
-        var user = new User
-        {
-            Id = _nextId++,
-            Name = request.Name,
-            Age = request.Age
-        };
+        _mediator = mediator;
+    }
 
-        Users.Add(user);
+    [HttpPost]
+    public async Task<ActionResult<User>> Create(
+        [FromBody] CreateUserRequest request,
+        CancellationToken cancellationToken)
+    {
+        var response = await _mediator.RequestAsync<CreateUserRequest, CreateUserResponse>(
+            request, cancellationToken);
 
+        var user = response.User;
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
     }
-   
-    //单个id用户查询
+
+    [HttpGet]
+    public async Task<ActionResult<List<User>>> GetAll(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.RequestAsync<GetUsersRequest, GetUsersResponse>(
+            new GetUsersRequest(), cancellationToken);
+
+        return Ok(response.Users);
+    }
+
     [HttpGet("{id:int}")]
-    public ActionResult<User> GetById(int id)
+    public async Task<ActionResult<User>> GetById(int id, CancellationToken cancellationToken)
     {
-        var user = Users.FirstOrDefault(user => user.Id == id);
+        var response = await _mediator.RequestAsync<GetUserByIdRequest, GetUserByIdResponse>(
+            new GetUserByIdRequest(id), cancellationToken);
 
-        if (user is null)
+        if (response.User is null)
         {
             return NotFound();
         }
 
-        return Ok(user);
+        return Ok(response.User);
     }
-    
-    // update可以用post也可以用put
+
     [HttpPost("{id:int}")]
-    public ActionResult<User> Update(
+    public async Task<ActionResult<User>> Update(
         int id,
-        [FromBody] UpdateUserRequest request)
+        [FromBody] UpdateUserRequest request,
+        CancellationToken cancellationToken)
     {
-        var user = Users.FirstOrDefault(item => item.Id == id);
+        var response = await _mediator.RequestAsync<UpdateUserMessage, UpdateUserResponse>(
+            new UpdateUserMessage(id, request), cancellationToken);
 
-        if (user is null)
+        if (response.User is null)
         {
             return NotFound();
         }
 
-        user.Name = request.Name;
-        user.Age = request.Age;
-
-        return Ok(user);
+        return Ok(response.User);
     }
 
-    //Delete:找到对应的item的id，判断是否存在，如果不存在返回空，如果有移除掉该user，返回ok；
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var user = Users.FirstOrDefault(item=>item.Id == id);
+        var response = await _mediator.RequestAsync<DeleteUserRequest, DeleteUserResponse>(
+            new DeleteUserRequest(id), cancellationToken);
 
-        if (user is null)
+        if (!response.Deleted)
         {
             return NotFound();
         }
-        
-        Users.Remove(user);
+
         return Ok();
     }
-    
-    //Read：全部查询
-    [HttpGet]
-    public ActionResult<List<User>> GetAll()
-    {
-        return Ok(Users);
-    }
-    
-    
 }
-
