@@ -16,28 +16,28 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> Create(
-        [FromBody] CreateUserRequest request,
+    public async Task<ActionResult<CreateUserResponse>> Create(
+        [FromBody] CreateUserCommand command,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.RequestAsync<CreateUserRequest, CreateUserResponse>(
-            request, cancellationToken);
+        var response = await _mediator.SendAsync<CreateUserCommand, CreateUserResponse>(
+            command, cancellationToken);
 
         var user = response.User;
-        return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+        return CreatedAtAction(nameof(GetById), new { id = user.Id }, response);
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<User>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<GetUsersResponse>> GetAll(CancellationToken cancellationToken)
     {
         var response = await _mediator.RequestAsync<GetUsersRequest, GetUsersResponse>(
             new GetUsersRequest(), cancellationToken);
 
-        return Ok(response.Users);
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<User>> GetById(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<GetUserByIdResponse>> GetById(int id, CancellationToken cancellationToken)
     {
         var response = await _mediator.RequestAsync<GetUserByIdRequest, GetUserByIdResponse>(
             new GetUserByIdRequest(id), cancellationToken);
@@ -47,37 +47,37 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
-        return Ok(response.User);
+        return Ok(response);
     }
 
     [HttpPost("{id:int}")]
-    public async Task<ActionResult<User>> Update(
+    public async Task<ActionResult<UpdateUserResponse>> Update(
         int id,
         [FromBody] UpdateUserRequest request,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.RequestAsync<UpdateUserMessage, UpdateUserResponse>(
-            new UpdateUserMessage(id, request), cancellationToken);
+        var response = await _mediator.SendAsync<UpdateUserCommand, UpdateUserResponse>(
+            new UpdateUserCommand(id, request), cancellationToken);
 
         if (response.User is null)
         {
             return NotFound();
         }
 
-        return Ok(response.User);
+        return Ok(response);
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<DeleteUserResponse>> Delete(int id, CancellationToken cancellationToken)
     {
-        var response = await _mediator.RequestAsync<DeleteUserRequest, DeleteUserResponse>(
-            new DeleteUserRequest(id), cancellationToken);
+        var response = await _mediator.SendAsync<DeleteUserCommand, DeleteUserResponse>(
+            new DeleteUserCommand(id), cancellationToken);
 
         if (!response.Deleted)
         {
             return NotFound();
         }
 
-        return Ok();
+        return Ok(response);
     }
 }

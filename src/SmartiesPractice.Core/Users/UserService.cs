@@ -11,40 +11,49 @@ public class UserService
         _store = store;
     }
 
-    public User Create(CreateUserRequest request)
+    public Task<User> CreateAsync(
+        CreateUserCommand command, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var user = new User
         {
-            Name = request.Name,
-            Age = request.Age
+            Name = command.Name,
+            Age = command.Age
         };
 
-        return _store.Add(user);
+        return Task.FromResult(_store.Add(user));
     }
 
-    public List<User> GetAll()
+    public Task<List<User>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return _store.GetAll();
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(_store.GetAll());
     }
 
-    public User? GetById(int id)
+    public Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return _store.GetById(id);
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(_store.GetById(id));
     }
 
-    public User? Update(int id, UpdateUserRequest request)
+    public Task<User?> UpdateAsync(
+        int id, UpdateUserRequest request, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var updatedUser = new User
         {
             Name = request.Name,
             Age = request.Age
         };
 
-        return _store.Update(id, updatedUser);
+        return Task.FromResult(_store.Update(id, updatedUser));
     }
 
-    public bool Delete(int id)
+    public Task<bool> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        return _store.Delete(id);
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(_store.Delete(id));
     }
 }
