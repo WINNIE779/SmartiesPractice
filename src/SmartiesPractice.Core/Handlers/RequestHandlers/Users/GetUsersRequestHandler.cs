@@ -1,7 +1,7 @@
 using Mediator.Net.Context;
 using Mediator.Net.Contracts;
-using SmartiesPractice.Core.Users;
-using SmartiesPractice.Messages.Users;
+using SmartiesPractice.Core.Services.Users;
+using SmartiesPractice.Messages.Requests.Users;
 
 namespace SmartiesPractice.Core.Handlers.RequestHandlers.Users;
 

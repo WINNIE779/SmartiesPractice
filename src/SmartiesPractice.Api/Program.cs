@@ -1,9 +1,9 @@
-using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Mediator.Net;
+using Autofac;
 using Mediator.Net.Autofac;
+using Mediator.Net;
 using SmartiesPractice.Core.Handlers.CommandHandlers.Users;
-using SmartiesPractice.Core.Users;
+using SmartiesPractice.Core.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(container =>
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<InMemoryUserStore>();
+builder.Services.AddSingleton<UserDataProvider>();
 builder.Services.AddScoped<UserService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

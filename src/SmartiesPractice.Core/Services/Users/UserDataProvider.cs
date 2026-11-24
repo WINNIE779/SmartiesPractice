@@ -1,30 +1,30 @@
-using SmartiesPractice.Messages.Users;
+using SmartiesPractice.Messages.DTO.Users;
 
-namespace SmartiesPractice.Core.Users;
+namespace SmartiesPractice.Core.Services.Users;
 
-public class InMemoryUserStore
+public class UserDataProvider
 {
-    private readonly List<User> _users = new();
+    private readonly List<UserDto> _users = new();
     private int _nextId = 1;
 
-    public User Add(User user)
+    public UserDto Add(UserDto user)
     {
         user.Id = _nextId++;
         _users.Add(user);
         return user;
     }
 
-    public List<User> GetAll()
+    public List<UserDto> GetAll()
     {
         return _users;
     }
 
-    public User? GetById(int id)
+    public UserDto? GetById(int id)
     {
         return _users.FirstOrDefault(user => user.Id == id);
     }
 
-    public User? Update(int id, User updatedUser)
+    public UserDto? Update(int id, UserDto updatedUser)
     {
         var user = GetById(id);
 

@@ -1,6 +1,7 @@
 using Mediator.Net.Contracts;
+using SmartiesPractice.Messages.DTO.Users;
 
-namespace SmartiesPractice.Messages.Users;
+namespace SmartiesPractice.Messages.Commands.Users;
 
 public class CreateUserCommand : ICommand
 {
@@ -9,4 +10,4 @@ public class CreateUserCommand : ICommand
     public int Age { get; set; }
 }
 
-public record CreateUserResponse(User User) : IResponse;
+public record CreateUserResponse(UserDto User) : IResponse;

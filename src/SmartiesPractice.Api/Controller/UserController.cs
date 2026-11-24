@@ -1,6 +1,8 @@
 using Mediator.Net;
 using Microsoft.AspNetCore.Mvc;
-using SmartiesPractice.Messages.Users;
+using SmartiesPractice.Messages.Commands.Users;
+using SmartiesPractice.Messages.DTO.Users;
+using SmartiesPractice.Messages.Requests.Users;
 
 namespace SmartiesPractice.Api.Controllers;
 
@@ -53,7 +55,7 @@ public class UserController : ControllerBase
     [HttpPost("{id:int}")]
     public async Task<ActionResult<UpdateUserResponse>> Update(
         int id,
-        [FromBody] UpdateUserRequest request,
+        [FromBody] UpdateUserRequestDto request,
         CancellationToken cancellationToken)
     {
         var response = await _mediator.SendAsync<UpdateUserCommand, UpdateUserResponse>(

@@ -1,6 +1,6 @@
-namespace SmartiesPractice.Messages.Users;
+namespace SmartiesPractice.Messages.DTO.Users;
 
-public class User
+public class UserDto
 {
     public int Id { get; set; }
 

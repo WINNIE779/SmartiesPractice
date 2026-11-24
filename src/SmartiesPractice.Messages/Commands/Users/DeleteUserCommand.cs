@@ -1,6 +1,6 @@
 using Mediator.Net.Contracts;
 
-namespace SmartiesPractice.Messages.Users;
+namespace SmartiesPractice.Messages.Commands.Users;
 
 public record DeleteUserCommand(int Id) : ICommand;
 
