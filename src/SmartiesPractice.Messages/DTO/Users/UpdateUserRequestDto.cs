@@ -1,6 +1,6 @@
-namespace SmartiesPractice.Messages.Users;
+namespace SmartiesPractice.Messages.DTO.Users;
 
-public class UpdateUserRequest
+public class UpdateUserRequestDto
 {
  public string Name { get; set; }=string.Empty;
  
